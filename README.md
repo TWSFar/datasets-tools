@@ -1,2 +1,3 @@
-# split-dataset-of-train-and-val
 按照3:7划分训练数据集和测试数据集
+# 放在训练数据的根目录, train_path代表训练数据的目录, label_path代表标签的目录.
+# fd 和 fl 分别代表数据和标签, 主要两者格式的区别, 根据需求设置.
