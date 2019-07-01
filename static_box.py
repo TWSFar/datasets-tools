@@ -13,7 +13,9 @@ if __name__ == "__main__":
     if not osp.exists(res):
         os.makedirs(res)
 
-
+    box_number = 0
+    means_w = 0
+    means_h = 0
     filelist = os.listdir(path)
 
     w_h_minset = []
@@ -50,12 +52,19 @@ if __name__ == "__main__":
             bw = (x2 - x1) / width
             bh = (y2 - y1) / height
 
-            w_div_h.append([min(bw, bh) / max(bw, bh)])
+            w_div_h.append([bw / bh])
             w_h_minset.append([min(bw, bh)])
             #box_wh.append([bw, bh, width, height])
             boxes_wh.append([bw, bh, width, height])
-    
+
+            box_number += 1
+            temp = (box_number-1) / box_number
+            means_h = (means_h * temp + height/box_number) 
+            means_w = (means_w * temp + width/box_number) 
+            
     result = (w_h_minset, w_div_h, boxes_wh)
+
+    print(means_h, means_w)
 
     for i, txt in enumerate(res_file):
         temp = osp.join(res, txt)
