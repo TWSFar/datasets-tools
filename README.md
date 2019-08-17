@@ -7,3 +7,5 @@ txt2voc: 将txt标签转为voc的xml形式
 
 
 generate_txt: 将voc的annotation生成mmdetection需要的形式
+
+xml2json: 将voc的解释xml转变成coco的json类型

@@ -36,8 +36,8 @@ for filename in tqdm(os.listdir(annotations_dir)):
         fout.write('\t'+'</source>'+'\n')
         
         fout.write('\t'+'<owner>'+'\n')
-        fout.write('\t\t'+'<flickrid>'+'Haipeng Zhang'+'</flickrid>'+'\n')
-        fout.write('\t\t'+'<name>'+'Haipeng Zhang'+'</name>'+'\n')
+        fout.write('\t\t'+'<flickrid>'+'TWSF'+'</flickrid>'+'\n')
+        fout.write('\t\t'+'<name>'+'TWSF'+'</name>'+'\n')
         fout.write('\t'+'</owner>'+'\n')
         
         fout.write('\t'+'<size>'+'\n')
