@@ -80,9 +80,9 @@ for iind, cat in enumerate(voc_clses):
     categories.append(cate)
 
 # voc2007xmls = 'anns'
-voc2007xmls = 'F:\\CV\\Code\\voc2coco-pattern-master\\train\\Annotations'
+voc2007xmls = 'G:\\CV\\Code\\tools\\datasets-tools\\VOC2012\\train\\Annotations'
 # test_txt = 'voc2007/test.txt'
-test_txt = 'F:\\CV\\Code\\voc2coco-pattern-master\\train\\ImageSets\\Main\\train.txt'
+test_txt = 'G:\\CV\\Code\\tools\\datasets-tools\\VOC2012\\train\\ImageSets\\Main\\train.txt'
 xml_names = txt2list(test_txt)
 xmls = []
 bboxes = []
