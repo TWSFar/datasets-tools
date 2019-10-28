@@ -1,15 +1,21 @@
-kmeans ratio: 0.8847337896747894, 1.5983062564123869, 0.39080581693101535
-kmeans scale: 0.000843721566004349, 0.038268006602998686, 0.009882550687854205
+kmeans ratio: 1.5983062564123869, 0.39080581693101535, 0.8847337896747894
+kmeans scale: 0.0008465935418748745, 0.03833166037752785, 0.009934600324450584
 
 all object bboxes information:
 ------area-------
 maximum object area: 0.30296232218377545
 mean object area: 0.0015348091972414238
 minimum object area: 1.452469391628354e-06
+maximum object area diff: 0.30058342945021144
+mean object area diff: 0.012590597467494297
+minimum object area diff: 0.0
 -------side------
 maximum object side: 0.6530612244897959
 mean object side: 0.040465331651863536
 minimum object side: 0.0015657620041753654
+maximum object side diff: 0.6353159217758084
+mean object side diff: 0.13054323268055731
+minimum object side diff: 0.0012132960984735514
 -------scale: s, m, l------
 small object percentage: 89.09%
 medium object percentage: 10.65%

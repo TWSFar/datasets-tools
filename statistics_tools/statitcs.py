@@ -57,6 +57,8 @@ def analyse_labels(dataset):
     plt.title('There are Yi images containing Xi targets')
     plt.xlabel('number of object')
     plt.ylabel('number of image')
+    my_x_ticks = np.arange(0, len(obj_img_num), 30)
+    plt.xticks(my_x_ticks)
     plt.bar(x, y)
     plt.savefig(osp.join(result, dataset_name, mode + "_obj_img_num.png"))
     plt.close()
@@ -137,10 +139,16 @@ def analyse_bboxes(dataset):
     obj_size_rh = []
     per_obj_size_rw = [[] for i in range(dataset.num_classes)]
     per_obj_size_rh = [[] for i in range(dataset.num_classes)]
+    per_img_obj_side_max_diff = []
+    per_img_obj_area_max_diff = []
 
     for jj, sample in enumerate(tqdm(samples)):
         img_w = sample['width']
         img_h = sample['height']
+        max_side = 0
+        min_side = 1
+        max_area = 0
+        min_area = 1
         for ii, bbox in enumerate(sample['bboxes']):
             if isinstance(bbox, np.ndarray):
                 bbox = bbox.tolist()
@@ -148,14 +156,22 @@ def analyse_bboxes(dataset):
             # 640, if area < 32 * 32 , obj is small obj in coco
             rw = (bbox[2] - bbox[0]) / img_w
             rh = (bbox[3] - bbox[1]) / img_h
+            max_side = max(rw, rh, max_side)
+            min_side = min(rw, rh, min_side)
+            max_area = max(rw * rh, max_area)
+            min_area = min(rw * rh, min_area)
             if rw <= 0 or rh <= 0:
                 continue
             obj_size_rw.append(rw)
             obj_size_rh.append(rh)
             per_obj_size_rw[cls_id].append(rw)
             per_obj_size_rh[cls_id].append(rh)
+        per_img_obj_side_max_diff.append(max_side - min_side)
+        per_img_obj_area_max_diff.append(max_area - min_area)
 
     """ all obj and use ratio """
+    per_img_obj_side_max_diff = np.array(per_img_obj_side_max_diff)
+    per_img_obj_area_max_diff = np.array(per_img_obj_area_max_diff)
     obj_size_rw = np.array(obj_size_rw, dtype=np.float64)
     obj_size_rh = np.array(obj_size_rh, dtype=np.float64)
     obj_area_ratio = obj_size_rh * obj_size_rw
@@ -178,16 +194,28 @@ def analyse_bboxes(dataset):
     area_max = obj_area_ratio.max()
     area_mean = obj_area_ratio.mean()
     area_min = obj_area_ratio.min()
+    area_diff_max = per_img_obj_area_max_diff.max()
+    area_diff_mean = per_img_obj_area_max_diff.mean()
+    area_diff_min = per_img_obj_area_max_diff.min()
     f.writelines('maximum object area: {}\n'.format(area_max))
     f.writelines('mean object area: {}\n'.format(area_mean))
     f.writelines('minimum object area: {}\n'.format(area_min))
+    f.writelines('maximum object area diff: {}\n'.format(area_diff_max))
+    f.writelines('mean object area diff: {}\n'.format(area_diff_mean))
+    f.writelines('minimum object area diff: {}\n'.format(area_diff_min))
     f.writelines('-------side------\n')
     side_max = obj_longest_side.max()
     side_mean = obj_longest_side.mean()
     side_min = obj_longest_side.min()
+    side_diff_max = per_img_obj_side_max_diff.max()
+    side_diff_mean = per_img_obj_side_max_diff.mean()
+    side_diff_min = per_img_obj_side_max_diff.min()
     f.writelines('maximum object side: {}\n'.format(side_max))
     f.writelines('mean object side: {}\n'.format(side_mean))
     f.writelines('minimum object side: {}\n'.format(side_min))
+    f.writelines('maximum object side diff: {}\n'.format(side_diff_max))
+    f.writelines('mean object side diff: {}\n'.format(side_diff_mean))
+    f.writelines('minimum object side diff: {}\n'.format(side_diff_min))
     f.writelines('-------scale: s, m, l------\n')
     small_obj = (obj_area_ratio < hyp['small_obj']).sum() / len(obj_area_ratio)
     large_obj = (obj_area_ratio > hyp['medium_obj']).sum() / len(obj_area_ratio)
@@ -197,18 +225,31 @@ def analyse_bboxes(dataset):
     f.writelines('large object percentage: {:.4}%\n'.format(large_obj * 100))
     f.writelines('------------------\n\n')
 
-    # plot w and h
+    # # plot w and h
+    # plt.figure()
+    # plt.title('obj size (ratio)')
+    # plt.grid()
+    # plt.xlabel('width')
+    # plt.ylabel('hight')
+    # my_x_ticks = np.arange(0, 1, 0.1)
+    # my_y_ticks = np.arange(0, 1, 0.1)
+    # plt.xticks(my_x_ticks)
+    # plt.yticks(my_y_ticks)
+    # plt.bar(obj_size_rw, obj_size_rh)
+    # plt.savefig(osp.join(result, dataset_name, mode+"_obj_size_ratio.png"))
+    # # plt.show()
+    # plt.close()
+
+    # plot area
+    obj_area_ratio_sample = np.sort(obj_area_ratio)[::-1]
+    obj_area_ratio_sample = obj_area_ratio_sample[::100]
     plt.figure()
-    plt.title('obj size (ratio)')
+    plt.title('obj area (ratio sample 1/100)')
     plt.grid()
-    plt.xlabel('width')
-    plt.ylabel('hight')
-    my_x_ticks = np.arange(0, 1, 0.1)
-    my_y_ticks = np.arange(0, 1, 0.1)
-    plt.xticks(my_x_ticks)
-    plt.yticks(my_y_ticks)
-    plt.scatter(obj_size_rw, obj_size_rh)
-    plt.savefig(osp.join(result, dataset_name, mode+"_obj_size_ratio.png"))
+    plt.xlabel('image')
+    plt.ylabel('area')
+    plt.scatter(range(len(obj_area_ratio_sample)), obj_area_ratio_sample)
+    plt.savefig(osp.join(result, dataset_name, mode+"_obj_area_ratio.png"))
     # plt.show()
     plt.close()
 
@@ -288,9 +329,9 @@ def analyse_img_MeanAndStd(dataset):
 
 def statics(dataset):
     # analyse_labels(dataset)
-    # analyse_bboxes(dataset)
-    if mode == 'train':
-        analyse_img_MeanAndStd(dataset)  # olny analys
+    analyse_bboxes(dataset)
+    # if mode == 'train':
+        # analyse_img_MeanAndStd(dataset)  # olny analys
 
 
 if __name__ == '__main__':
