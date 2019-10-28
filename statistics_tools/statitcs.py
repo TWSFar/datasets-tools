@@ -225,20 +225,20 @@ def analyse_bboxes(dataset):
     f.writelines('large object percentage: {:.4}%\n'.format(large_obj * 100))
     f.writelines('------------------\n\n')
 
-    # # plot w and h
-    # plt.figure()
-    # plt.title('obj size (ratio)')
-    # plt.grid()
-    # plt.xlabel('width')
-    # plt.ylabel('hight')
-    # my_x_ticks = np.arange(0, 1, 0.1)
-    # my_y_ticks = np.arange(0, 1, 0.1)
-    # plt.xticks(my_x_ticks)
-    # plt.yticks(my_y_ticks)
-    # plt.bar(obj_size_rw, obj_size_rh)
-    # plt.savefig(osp.join(result, dataset_name, mode+"_obj_size_ratio.png"))
-    # # plt.show()
-    # plt.close()
+    # plot w and h
+    plt.figure()
+    plt.title('obj size (ratio)')
+    plt.grid()
+    plt.xlabel('width')
+    plt.ylabel('hight')
+    my_x_ticks = np.arange(0, 1, 0.1)
+    my_y_ticks = np.arange(0, 1, 0.1)
+    plt.xticks(my_x_ticks)
+    plt.yticks(my_y_ticks)
+    plt.bar(obj_size_rw, obj_size_rh)
+    plt.savefig(osp.join(result, dataset_name, mode+"_obj_size_ratio.png"))
+    # plt.show()
+    plt.close()
 
     # plot area
     obj_area_ratio_sample = np.sort(obj_area_ratio)[::-1]
