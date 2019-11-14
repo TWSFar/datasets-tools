@@ -35,7 +35,14 @@ class VisDrone(object):
         else:
             raise('error')
 
-    def _get_annolist(self, anno_path):
+    def _get_annolist(self, split):
+        """ annotation type is '.txt'
+        return list of all image annotation path
+        """
+        img_list = self._get_imglist(split)
+        return [img.replace('images', 'annotations').replace('jpg', 'txt') for img in img_list]
+
+    def _get_gtbox(self, anno_path):
         box_all = []
         with open(anno_path, 'r') as f:
             data = [x.strip().split(',')[:8] for x in f.readlines()]
@@ -50,7 +57,7 @@ class VisDrone(object):
         return {'bboxes': np.array(box_all, dtype=np.float64),
                 'cls': bboxes[:, 5]}
 
-    def load_samples(self, split):
+    def _load_samples(self, split):
         cache_file = osp.join(self.cache_dir, split + '_samples.pkl')
 
         # load bbox and save to cache
@@ -67,7 +74,7 @@ class VisDrone(object):
         # load information of image and save to cache
         sizes = [Image.open(img).size for img in img_list]
 
-        samples = [self._get_annolist(ann) for ann in anno_path]
+        samples = [self._get_gtbox(ann) for ann in anno_path]
 
         for i, img in enumerate(img_list):
             samples[i]['image'] = img  # image path
@@ -83,5 +90,5 @@ class VisDrone(object):
 
 if __name__ == "__main__":
     dataset = VisDrone("E:\CV\data\\visdrone")
-    out = dataset.load_samples('train')
+    out = dataset._load_samples('train')
     pass

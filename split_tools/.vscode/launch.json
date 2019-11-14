@@ -9,7 +9,8 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            // "args": ["--dataset VisDrone --mode ['val'] --db_root 'E:\\CV\\data\\visdrone' --mask_size [30, 40]"]
         }
     ]
 }
