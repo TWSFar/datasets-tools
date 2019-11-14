@@ -15,9 +15,6 @@ class VisDrone(object):
         self.src_traindir = db_root + '/VisDrone2019-DET-train'
         self.src_valdir = db_root + '/VisDrone2019-DET-val'
         self.src_testdir = db_root + '/VisDrone2019-DET-test-challenge'
-        self.region_voc_dir = db_root + '/region_voc'
-        self.detect_voc_dir = db_root + '/detect_voc'
-        self.detect_coco_dir = db_root + '/detect_coco'
         cache_path = osp.join(db_root, 'cache')
         if not osp.exists(cache_path):
             os.makedirs(cache_path)

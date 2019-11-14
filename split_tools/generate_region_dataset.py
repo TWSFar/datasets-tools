@@ -98,9 +98,9 @@ if __name__ == "__main__":
     args = parse_args()
 
     dataset = get_dataset(args.dataset, args.db_root)
-    dest_datadir = dataset.region_voc_dir
+    dest_datadir = args.db_root + '/region_voc'
     image_dir = dest_datadir + '/JPEGImages'
-    mask_dir = dest_datadir + '/RegionMask'
+    mask_dir = dest_datadir + '/SegmentationClass'
     annotation_dir = dest_datadir + '/Annotations'
     list_folder = dest_datadir + '/ImageSets'
 
