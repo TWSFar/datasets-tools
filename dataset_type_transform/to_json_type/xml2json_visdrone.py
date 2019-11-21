@@ -16,6 +16,7 @@ hyp = {
 hyp['json_dir'] = osp.join(hyp['data_dir'], 'annotations_json')
 hyp['xml_dir'] = osp.join(hyp['data_dir'], 'annotations_xml')
 hyp['img_dir'] = osp.join(hyp['data_dir'], 'images')
+hyp['set_file'] = osp.join(hyp['data_dir'], 'ImageSet', 'Main', hyp['mode'] + '.txt')
 
 
 class getItem(object):
@@ -92,13 +93,14 @@ def make_json():
     # categories
     categories = item.get_cat_item()
 
-    txt_files = os.listdir(hyp['txt_dir'])
-    for id, file_name in enumerate(tqdm(txt_files)):
+    with open(hyp['set_file'], 'r') as f:
+        xml_list = f.readlines()
+    for id, file_name in enumerate(tqdm(xml_list)):
         img_id = id
 
         # anno info
-        anno_txt = os.path.join(hyp['txt_dir'], file_name)
-        box_all, gt_cls = getGTBox(anno_txt)
+        anno_xml = os.path.join(hyp['xml_dir'], file_name + '.xml')
+        box_all, gt_cls = getGTBox(anno_xml)
         for ii in range(len(box_all)):
             annotations.append(
                 item.get_ann_item(box_all[ii], img_id, gt_cls[ii], anno_id))
