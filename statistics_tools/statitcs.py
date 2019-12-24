@@ -10,18 +10,21 @@ samples:
     ]
 
 """
+import os
 import numpy as np
 import os.path as osp
-from datasets.visdrone import VisDrone
 import matplotlib.pyplot as plt
 from scipy import stats
 from tqdm import tqdm
 from sklearn.cluster import KMeans
-result = "G:\\CV\\Code\\tools\\datasets-tools\\statistics_tools\\result"
-data_dir = 'G:\\CV\\Dataset\\检测\\Visdrone'
-dataset_name = 'visdrone'
-mode = 'train'
-
+# from datasets.visdrone import VisDrone
+from datasets.visdrone_chip import VisDrone
+data_dir = 'G:\\CV\\Dataset\\Detection\\Visdrone\\detect_voc'
+dataset_name = 'visdrone_chip'
+mode = 'val'
+result_dir = osp.join("G:\\CV\\Code\\tools\\datasets-tools\\statistics_tools\\result", dataset_name)
+if not osp.exists(result_dir):
+    os.mkdir(result_dir)
 hyp = {
     'small_obj': 32**2 / (640*480),
     'medium_obj': 96**2 / (640*480)
@@ -41,7 +44,7 @@ def analyse_labels(dataset):
     """
     labels = dataset.samples
     num_cls = dataset.num_classes
-    labels_info = osp.join(result, dataset_name, mode + '_labels_info.txt')
+    labels_info = osp.join(result_dir, mode + '_labels_info.txt')
     f = open(labels_info, 'w')
 
     """ image's number for per number of obj """
@@ -60,7 +63,7 @@ def analyse_labels(dataset):
     my_x_ticks = np.arange(0, len(obj_img_num), 30)
     plt.xticks(my_x_ticks)
     plt.bar(x, y)
-    plt.savefig(osp.join(result, dataset_name, mode + "_obj_img_num.png"))
+    plt.savefig(osp.join(result_dir, mode + "_obj_img_num.png"))
     plt.close()
 
     """ number of every class """
@@ -83,7 +86,7 @@ def analyse_labels(dataset):
     plt.yticks(my_y_ticks)
     plt.bar(range(len(per_img_obj)), per_img_obj)
     plt.text(900, 300, pprint)
-    plt.savefig(osp.join(result, dataset_name, mode + "_per_img_obj.png"))
+    plt.savefig(osp.join(result_dir, mode + "_per_img_obj.png"))
     plt.close()
 
     """" number of per classes """
@@ -114,7 +117,7 @@ def analyse_labels(dataset):
     my_x_ticks = np.arange(0, num_cls, 1)
     plt.xticks(my_x_ticks)
     plt.bar(range(num_cls), per_cls_num)
-    plt.savefig(osp.join(result, dataset_name, mode + "_per_cls_num.png"))
+    plt.savefig(osp.join(result_dir, mode + "_per_cls_num.png"))
     plt.close()
 
     if dataset_name == 'visdrone':
@@ -130,7 +133,7 @@ def analyse_labels(dataset):
 
 
 def analyse_bboxes(dataset):
-    labels_info = osp.join(result, dataset_name, mode + '_bbox_info.txt')
+    labels_info = osp.join(result_dir, mode + '_bbox_info.txt')
     f = open(labels_info, 'w')
 
     samples = dataset.samples
@@ -236,7 +239,7 @@ def analyse_bboxes(dataset):
     plt.xticks(my_x_ticks)
     plt.yticks(my_y_ticks)
     plt.bar(obj_size_rw, obj_size_rh)
-    plt.savefig(osp.join(result, dataset_name, mode+"_obj_size_ratio.png"))
+    plt.savefig(osp.join(result_dir, mode+"_obj_size_ratio.png"))
     # plt.show()
     plt.close()
 
@@ -249,7 +252,7 @@ def analyse_bboxes(dataset):
     plt.xlabel('image')
     plt.ylabel('area')
     plt.scatter(range(len(obj_area_ratio_sample)), obj_area_ratio_sample)
-    plt.savefig(osp.join(result, dataset_name, mode+"_obj_area_ratio.png"))
+    plt.savefig(osp.join(result_dir, mode+"_obj_area_ratio.png"))
     # plt.show()
     plt.close()
 
@@ -290,13 +293,13 @@ def analyse_bboxes(dataset):
     my_x_ticks = np.arange(0, dataset.num_classes, 1)
     plt.xticks(my_x_ticks)
     plt.bar(range(dataset.num_classes), cls_obj_mean_area)
-    plt.savefig(osp.join(result, dataset_name, mode+"_cls_mean_area.png"))
+    plt.savefig(osp.join(result_dir, mode+"_cls_mean_area.png"))
     # plt.show()
     plt.close()
 
 
 def analyse_img_MeanAndStd(dataset):
-    meanAndStd_info = osp.join(result, 'train_dataset_mean_std.txt')
+    meanAndStd_info = osp.join(result_dir, 'train_dataset_mean_std.txt')
     samples = dataset.samples
     Rmean = []
     Gmean = []
@@ -328,10 +331,10 @@ def analyse_img_MeanAndStd(dataset):
 
 
 def statics(dataset):
-    # analyse_labels(dataset)
+    analyse_labels(dataset)
     analyse_bboxes(dataset)
-    # if mode == 'train':
-        # analyse_img_MeanAndStd(dataset)  # olny analys
+    if mode == 'train':
+        analyse_img_MeanAndStd(dataset)  # olny analys
 
 
 if __name__ == '__main__':

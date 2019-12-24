@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import matplotlib as
+
 
 def show_image(img, labels):
     import matplotlib.pyplot as plt
@@ -38,7 +38,7 @@ for bbox in bboxes:
     t_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_COMPLEX, 0.4 , 1)[0]
     c1 = (x1, y1 - t_size[1]-4)
     c2 = (x1 + t_size[0], y1)
-    cv2.rectangle(img, c1, c2, color=(0, 0, 255), thickness=-1)
+    cv2.rectangle(img, c1, c2, color=#FFFAF0, thickness=-1)
     cv2.putText(img, label, (x1, y1-4), cv2.FONT_HERSHEY_COMPLEX, 0.4, (255, 255, 255), 1)
     # cv2.putText(img, 'vehicle', (x1, y1-10), cv2.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 1)
     cv2.rectangle(img, (x1, y1), (x2, y2), color=(0, 0, 255), thickness=2)
