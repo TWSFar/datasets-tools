@@ -29,4 +29,3 @@ for i, filename in enumerate(data):
     else:
         shutil.move(fd, obj_dir[0])
         shutil.move(fl, obj_dir[2])
-        

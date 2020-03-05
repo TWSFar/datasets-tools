@@ -17,11 +17,11 @@ import matplotlib.pyplot as plt
 from scipy import stats
 from tqdm import tqdm
 from sklearn.cluster import KMeans
-# from datasets.visdrone import VisDrone
-from datasets.visdrone_chip import VisDrone
-data_dir = 'G:\\CV\\Dataset\\Detection\\Visdrone\\detect_voc'
-dataset_name = 'visdrone_chip'
-mode = 'val'
+from datasets.visdrone import VisDrone
+# from datasets.visdrone_chip import VisDrone
+data_dir = 'G:\\CV\\Dataset\\Detection\\Visdrone'
+dataset_name = 'visdrone'
+mode = 'train'
 result_dir = osp.join("G:\\CV\\Code\\tools\\datasets-tools\\statistics_tools\\result", dataset_name)
 if not osp.exists(result_dir):
     os.mkdir(result_dir)
@@ -228,6 +228,17 @@ def analyse_bboxes(dataset):
     f.writelines('large object percentage: {:.4}%\n'.format(large_obj * 100))
     f.writelines('------------------\n\n')
 
+    # small, medium, large objcet informat
+    small_obj_side = obj_longest_side[obj_area_ratio < hyp['small_obj']]
+    medium_obj_side = obj_longest_side[
+        np.where(obj_area_ratio > hyp['small_obj']) and
+        np.where(obj_area_ratio < hyp['medium_obj'])
+    ]
+    large_obj_side = obj_longest_side[obj_area_ratio > hyp['medium_obj']]
+    titles = ["small", "medium", "large"]
+    for i, obj_side in enumerate([small_obj_side, medium_obj_side, large_obj_side]):
+        f.writelines('{} obj side mean: {}\n'.format(titles[i], obj_side.mean()))
+
     # plot w and h
     plt.figure()
     plt.title('obj size (ratio)')
@@ -331,7 +342,7 @@ def analyse_img_MeanAndStd(dataset):
 
 
 def statics(dataset):
-    analyse_labels(dataset)
+    # analyse_labels(dataset)
     analyse_bboxes(dataset)
     if mode == 'train':
         analyse_img_MeanAndStd(dataset)  # olny analys

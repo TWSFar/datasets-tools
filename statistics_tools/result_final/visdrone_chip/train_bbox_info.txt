@@ -1,0 +1,134 @@
+kmeans ratio: 1.2771828065613062, 0.5879424495162024, 2.263253745434922
+kmeans scale: 0.004913858112764926, 0.0513378052829159, 0.19812625112973925
+
+all object bboxes information:
+------area-------
+maximum object area: 0.8116955017301039
+mean object area: 0.009185780149896235
+minimum object area: 1.2244897959183674e-05
+maximum object area diff: 0.7075519274376418
+mean object area diff: 0.03090489516708646
+minimum object area diff: -1.0
+-------side------
+maximum object side: 0.9966666666666667
+mean object side: 0.09417773639332377
+minimum object side: 0.0035714285714285713
+maximum object side diff: 0.9371428571428572
+mean object side diff: 0.1775533477553833
+minimum object side diff: -1.0
+-------scale: s, m, l------
+small object percentage: 53.28%
+medium object percentage: 40.0%
+large object percentage: 6.72%
+------------------
+
+0: pedestrian
+	area:
+		maximum object area: 0.2234597981204316
+		mean object area: 0.0030502145340043823
+		minimum object area: 1.7935032139577593e-05
+	side:
+		maximum object side: 0.7262443438914027
+		mean object side: 0.06557800277550135
+		minimum object side: 0.004734848484848485
+------------------
+
+1: person
+	area:
+		maximum object area: 0.1915723593964335
+		mean object area: 0.0023602876143671474
+		minimum object area: 1.3075256819836035e-05
+	side:
+		maximum object side: 0.5643939393939394
+		mean object side: 0.051308746199597154
+		minimum object side: 0.004395604395604396
+------------------
+
+2: bicycle
+	area:
+		maximum object area: 0.10306284293552812
+		mean object area: 0.004114807994425996
+		minimum object area: 2.2222222222222227e-05
+	side:
+		maximum object side: 0.45166666666666666
+		mean object side: 0.06821506243011623
+		minimum object side: 0.004901960784313725
+------------------
+
+3: car
+	area:
+		maximum object area: 0.7977402725796201
+		mean object area: 0.01232396422788928
+		minimum object area: 1.2244897959183674e-05
+	side:
+		maximum object side: 0.9773755656108597
+		mean object side: 0.11170546318069695
+		minimum object side: 0.0035714285714285713
+------------------
+
+4: van
+	area:
+		maximum object area: 0.6096373189798795
+		mean object area: 0.014528541622706476
+		minimum object area: 3.274036887482266e-05
+	side:
+		maximum object side: 0.9769230769230769
+		mean object side: 0.12140591656567458
+		minimum object side: 0.006493506493506494
+------------------
+
+5: truck
+	area:
+		maximum object area: 0.8116955017301039
+		mean object area: 0.02537036939527
+		minimum object area: 2.8698979591836737e-05
+	side:
+		maximum object side: 0.9919871794871795
+		mean object side: 0.1634969956035286
+		minimum object side: 0.005357142857142857
+------------------
+
+6: tricycle
+	area:
+		maximum object area: 0.3606753345887538
+		mean object area: 0.010268337467389305
+		minimum object area: 2.32627867784659e-05
+	side:
+		maximum object side: 0.685
+		mean object side: 0.10601635409273774
+		minimum object side: 0.00482315112540193
+------------------
+
+7: awning-tricycle
+	area:
+		maximum object area: 0.32217687074829937
+		mean object area: 0.011104097883593006
+		minimum object area: 3.622750875498128e-05
+	side:
+		maximum object side: 0.6435185185185185
+		mean object side: 0.10621576581065853
+		minimum object side: 0.006430868167202572
+------------------
+
+8: bus
+	area:
+		maximum object area: 0.7961904761904762
+		mean object area: 0.029723748750667526
+		minimum object area: 2.9617289092507746e-05
+	side:
+		maximum object side: 0.9966666666666667
+		mean object side: 0.17951944575943307
+		minimum object side: 0.005442176870748299
+------------------
+
+9: motor
+	area:
+		maximum object area: 0.45858430518176774
+		mean object area: 0.004027885978361759
+		minimum object area: 1.3451274104683196e-05
+	side:
+		maximum object side: 0.738562091503268
+		mean object side: 0.06867174350108741
+		minimum object side: 0.004734848484848485
+------------------
+
