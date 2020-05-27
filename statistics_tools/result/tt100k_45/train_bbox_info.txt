@@ -1,0 +1,512 @@
+kmeans ratio: 1.0398409806144362, 0.8715646911004332, 0.5950310642958211
+kmeans scale: 0.00036760841453466176, 0.002274006924948441, 0.007357693711916636
+
+all object bboxes information:
+------area-------
+maximum object area: 0.023224830627441406
+mean object area: 0.0007169007392731541
+minimum object area: 1.71661376953125e-05
+-------scale: s, m, l------
+small object percentage: 96.76%
+medium object percentage: 3.242%
+large object percentage: 0.0%
+------------------
+
+small obj side mean: 0.02234406548274596
+medium obj side mean: 0.024286473638110307
+large obj side mean: nan
+0: i2
+	area:
+		maximum object area: 0.003288745880126953
+		mean object area: 0.00041545039475566207
+		minimum object area: 4.029273986816406e-05
+	side:
+		maximum object side: 0.06787109375
+		mean object side: 0.020137902462121212
+		minimum object side: 0.00634765625
+------------------
+
+1: i4
+	area:
+		maximum object area: 0.007464885711669922
+		mean object area: 0.0006136809076581683
+		minimum object area: 2.8848648071289062e-05
+	side:
+		maximum object side: 0.0986328125
+		mean object side: 0.02264250426733193
+		minimum object side: 0.00537109375
+------------------
+
+2: i5
+	area:
+		maximum object area: 0.0084075927734375
+		mean object area: 0.0004763071616870935
+		minimum object area: 3.0994415283203125e-05
+	side:
+		maximum object side: 0.11328125
+		mean object side: 0.02083769437799043
+		minimum object side: 0.005859375
+------------------
+
+3: il100
+	area:
+		maximum object area: 0.00560760498046875
+		mean object area: 0.0008639693260192871
+		minimum object area: 7.2479248046875e-05
+	side:
+		maximum object side: 0.109375
+		mean object side: 0.027083687160326088
+		minimum object side: 0.0087890625
+------------------
+
+4: il60
+	area:
+		maximum object area: 0.008249759674072266
+		mean object area: 0.0008857645226653511
+		minimum object area: 6.437301635742188e-05
+	side:
+		maximum object side: 0.11572265625
+		mean object side: 0.02839254345414201
+		minimum object side: 0.00830078125
+------------------
+
+5: il80
+	area:
+		maximum object area: 0.008037567138671875
+		mean object area: 0.0009651135672167473
+		minimum object area: 6.4849853515625e-05
+	side:
+		maximum object side: 0.10009765625
+		mean object side: 0.029373711135786802
+		minimum object side: 0.00830078125
+------------------
+
+6: io
+	area:
+		maximum object area: 0.005096435546875
+		mean object area: 0.0005961944316995555
+		minimum object area: 4.00543212890625e-05
+	side:
+		maximum object side: 0.08154296875
+		mean object side: 0.02323040140086207
+		minimum object side: 0.00634765625
+------------------
+
+7: ip
+	area:
+		maximum object area: 0.004481315612792969
+		mean object area: 0.0005002749593634355
+		minimum object area: 4.9591064453125e-05
+	side:
+		maximum object side: 0.07275390625
+		mean object side: 0.02105777138157895
+		minimum object side: 0.00732421875
+------------------
+
+8: p10
+	area:
+		maximum object area: 0.00664067268371582
+		mean object area: 0.0007575642867166488
+		minimum object area: 4.3392181396484375e-05
+	side:
+		maximum object side: 0.08447265625
+		mean object side: 0.025520699923155737
+		minimum object side: 0.0068359375
+------------------
+
+9: p11
+	area:
+		maximum object area: 0.013286113739013672
+		mean object area: 0.0006292464194283028
+		minimum object area: 3.6716461181640625e-05
+	side:
+		maximum object side: 0.1455078125
+		mean object side: 0.021885985068369453
+		minimum object side: 0.00634765625
+------------------
+
+10: p12
+	area:
+		maximum object area: 0.006848335266113281
+		mean object area: 0.0007764843274962228
+		minimum object area: 6.4849853515625e-05
+	side:
+		maximum object side: 0.0859375
+		mean object side: 0.026740308077830188
+		minimum object side: 0.00830078125
+------------------
+
+11: p19
+	area:
+		maximum object area: 0.008221864700317383
+		mean object area: 0.0010397543852356658
+		minimum object area: 3.933906555175781e-05
+	side:
+		maximum object side: 0.10205078125
+		mean object side: 0.028741244612068964
+		minimum object side: 0.00732421875
+------------------
+
+12: p23
+	area:
+		maximum object area: 0.008428096771240234
+		mean object area: 0.0010174183757758579
+		minimum object area: 4.5299530029296875e-05
+	side:
+		maximum object side: 0.0986328125
+		mean object side: 0.030525067101226995
+		minimum object side: 0.0078125
+------------------
+
+13: p26
+	area:
+		maximum object area: 0.00868988037109375
+		mean object area: 0.0006771772810556356
+		minimum object area: 3.719329833984375e-05
+	side:
+		maximum object side: 0.1328125
+		mean object side: 0.02458377578883495
+		minimum object side: 0.00634765625
+------------------
+
+14: p27
+	area:
+		maximum object area: 0.0037682056427001953
+		mean object area: 0.0007659253619966053
+		minimum object area: 6.4849853515625e-05
+	side:
+		maximum object side: 0.087890625
+		mean object side: 0.026163736979166668
+		minimum object side: 0.00830078125
+------------------
+
+15: p3
+	area:
+		maximum object area: 0.0031709671020507812
+		mean object area: 0.000592165165119343
+		minimum object area: 5.364418029785156e-05
+	side:
+		maximum object side: 0.08544921875
+		mean object side: 0.023393510698198196
+		minimum object side: 0.00732421875
+------------------
+
+16: p5
+	area:
+		maximum object area: 0.016469955444335938
+		mean object area: 0.0011373416397922724
+		minimum object area: 5.245208740234375e-05
+	side:
+		maximum object side: 0.1533203125
+		mean object side: 0.03040023921996124
+		minimum object side: 0.0078125
+------------------
+
+17: p6
+	area:
+		maximum object area: 0.011014938354492188
+		mean object area: 0.0009148328200630519
+		minimum object area: 4.00543212890625e-05
+	side:
+		maximum object side: 0.13427734375
+		mean object side: 0.02955870697463768
+		minimum object side: 0.0068359375
+------------------
+
+18: pg
+	area:
+		maximum object area: 0.015746355056762695
+		mean object area: 0.001527405702150785
+		minimum object area: 7.128715515136719e-05
+	side:
+		maximum object side: 0.12646484375
+		mean object side: 0.03432053786057692
+		minimum object side: 0.0087890625
+------------------
+
+19: ph4
+	area:
+		maximum object area: 0.009005546569824219
+		mean object area: 0.0010684427008571394
+		minimum object area: 4.029273986816406e-05
+	side:
+		maximum object side: 0.1298828125
+		mean object side: 0.030697006777108432
+		minimum object side: 0.00634765625
+------------------
+
+20: ph4.5
+	area:
+		maximum object area: 0.0081024169921875
+		mean object area: 0.0011448098010704165
+		minimum object area: 5.7220458984375e-05
+	side:
+		maximum object side: 0.09375
+		mean object side: 0.031962410348360656
+		minimum object side: 0.0078125
+------------------
+
+21: ph5
+	area:
+		maximum object area: 0.003933429718017578
+		mean object area: 0.0007773098880297517
+		minimum object area: 4.673004150390625e-05
+	side:
+		maximum object side: 0.07275390625
+		mean object side: 0.027029377140410957
+		minimum object side: 0.0068359375
+------------------
+
+22: pl100
+	area:
+		maximum object area: 0.0072383880615234375
+		mean object area: 0.0009264659244392922
+		minimum object area: 6.890296936035156e-05
+	side:
+		maximum object side: 0.107421875
+		mean object side: 0.029156589295657016
+		minimum object side: 0.00830078125
+------------------
+
+23: pl120
+	area:
+		maximum object area: 0.007518768310546875
+		mean object area: 0.0009724772893465483
+		minimum object area: 7.295608520507812e-05
+	side:
+		maximum object side: 0.10546875
+		mean object side: 0.029496413010817308
+		minimum object side: 0.0087890625
+------------------
+
+24: pl20
+	area:
+		maximum object area: 0.012981891632080078
+		mean object area: 0.0006888569617757991
+		minimum object area: 3.719329833984375e-05
+	side:
+		maximum object side: 0.13427734375
+		mean object side: 0.02256058673469388
+		minimum object side: 0.00634765625
+------------------
+
+25: pl30
+	area:
+		maximum object area: 0.01212310791015625
+		mean object area: 0.0008961630251068852
+		minimum object area: 3.409385681152344e-05
+	side:
+		maximum object side: 0.1201171875
+		mean object side: 0.026533438756702412
+		minimum object side: 0.00634765625
+------------------
+
+26: pl40
+	area:
+		maximum object area: 0.013088226318359375
+		mean object area: 0.0007442806078040081
+		minimum object area: 2.6226043701171875e-05
+	side:
+		maximum object side: 0.142578125
+		mean object side: 0.02393918943077803
+		minimum object side: 0.00537109375
+------------------
+
+27: pl5
+	area:
+		maximum object area: 0.009955406188964844
+		mean object area: 0.00046452270564536623
+		minimum object area: 4.00543212890625e-05
+	side:
+		maximum object side: 0.1513671875
+		mean object side: 0.02056408282992565
+		minimum object side: 0.0068359375
+------------------
+
+28: pl50
+	area:
+		maximum object area: 0.011115074157714844
+		mean object area: 0.0006947701627557928
+		minimum object area: 3.0994415283203125e-05
+	side:
+		maximum object side: 0.1171875
+		mean object side: 0.022672526041666665
+		minimum object side: 0.00634765625
+------------------
+
+29: pl60
+	area:
+		maximum object area: 0.012959480285644531
+		mean object area: 0.000968138074693571
+		minimum object area: 3.719329833984375e-05
+	side:
+		maximum object side: 0.1318359375
+		mean object side: 0.02833052370484791
+		minimum object side: 0.00634765625
+------------------
+
+30: pl70
+	area:
+		maximum object area: 0.008425712585449219
+		mean object area: 0.0008016790001137742
+		minimum object area: 7.510185241699219e-05
+	side:
+		maximum object side: 0.10107421875
+		mean object side: 0.025769872572815534
+		minimum object side: 0.00927734375
+------------------
+
+31: pl80
+	area:
+		maximum object area: 0.011219024658203125
+		mean object area: 0.0007461639424096342
+		minimum object area: 4.3392181396484375e-05
+	side:
+		maximum object side: 0.1328125
+		mean object side: 0.02511438283953287
+		minimum object side: 0.0068359375
+------------------
+
+32: pm20
+	area:
+		maximum object area: 0.01580047607421875
+		mean object area: 0.0013278756186226818
+		minimum object area: 8.106231689453125e-05
+	side:
+		maximum object side: 0.1484375
+		mean object side: 0.035074109228971966
+		minimum object side: 0.009765625
+------------------
+
+33: pm30
+	area:
+		maximum object area: 0.0040283203125
+		mean object area: 0.001304486592610677
+		minimum object area: 9.012222290039062e-05
+	side:
+		maximum object side: 0.07275390625
+		mean object side: 0.03563802083333333
+		minimum object side: 0.01025390625
+------------------
+
+34: pm55
+	area:
+		maximum object area: 0.010558605194091797
+		mean object area: 0.0012614921647675183
+		minimum object area: 5.0067901611328125e-05
+	side:
+		maximum object side: 0.1181640625
+		mean object side: 0.033656529017857144
+		minimum object side: 0.00732421875
+------------------
+
+35: pn
+	area:
+		maximum object area: 0.010013103485107422
+		mean object area: 0.0005235584770760885
+		minimum object area: 2.1457672119140625e-05
+	side:
+		maximum object side: 0.12353515625
+		mean object side: 0.020556226388520678
+		minimum object side: 0.0048828125
+------------------
+
+36: pne
+	area:
+		maximum object area: 0.023224830627441406
+		mean object area: 0.0004911182409097008
+		minimum object area: 1.71661376953125e-05
+	side:
+		maximum object side: 0.16748046875
+		mean object side: 0.020593500725163163
+		minimum object side: 0.00439453125
+------------------
+
+37: po
+	area:
+		maximum object area: 0.013367652893066406
+		mean object area: 0.0006159357473152835
+		minimum object area: 3.647804260253906e-05
+	side:
+		maximum object side: 0.1279296875
+		mean object side: 0.023089392006802722
+		minimum object side: 0.0068359375
+------------------
+
+38: pr40
+	area:
+		maximum object area: 0.009429454803466797
+		mean object area: 0.001824107240228092
+		minimum object area: 0.0001316070556640625
+	side:
+		maximum object side: 0.1103515625
+		mean object side: 0.04185934627757353
+		minimum object side: 0.01171875
+------------------
+
+39: w13
+	area:
+		maximum object area: 0.01446533203125
+		mean object area: 0.0009648534986707899
+		minimum object area: 6.890296936035156e-05
+	side:
+		maximum object side: 0.154296875
+		mean object side: 0.02668185763888889
+		minimum object side: 0.00830078125
+------------------
+
+40: w32
+	area:
+		maximum object area: 0.0029289722442626953
+		mean object area: 0.0005029031208583287
+		minimum object area: 5.269050598144531e-05
+	side:
+		maximum object side: 0.05712890625
+		mean object side: 0.021107700892857142
+		minimum object side: 0.0078125
+------------------
+
+41: w55
+	area:
+		maximum object area: 0.0093994140625
+		mean object area: 0.0013338053992035192
+		minimum object area: 4.3392181396484375e-05
+	side:
+		maximum object side: 0.109375
+		mean object side: 0.032244481077981654
+		minimum object side: 0.0068359375
+------------------
+
+42: w57
+	area:
+		maximum object area: 0.016438961029052734
+		mean object area: 0.0010945280241875595
+		minimum object area: 5.364418029785156e-05
+	side:
+		maximum object side: 0.1923828125
+		mean object side: 0.029592071649239545
+		minimum object side: 0.00732421875
+------------------
+
+43: w59
+	area:
+		maximum object area: 0.013179302215576172
+		mean object area: 0.0011401195995143203
+		minimum object area: 3.719329833984375e-05
+	side:
+		maximum object side: 0.12158203125
+		mean object side: 0.029372918801229508
+		minimum object side: 0.00634765625
+------------------
+
+44: wo
+	area:
+		maximum object area: 0.006070137023925781
+		mean object area: 0.0008816588414858465
+		minimum object area: 2.86102294921875e-05
+	side:
+		maximum object side: 0.0927734375
+		mean object side: 0.02678189212328767
+		minimum object side: 0.005859375
+------------------
+

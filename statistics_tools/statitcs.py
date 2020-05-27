@@ -18,9 +18,11 @@ from scipy import stats
 from tqdm import tqdm
 from sklearn.cluster import KMeans
 from datasets.visdrone import VisDrone
+from datasets.dotav15 import Dota_V15
+from datasets.tt100k_45 import TT100K
 # from datasets.visdrone_chip import VisDrone
-data_dir = 'G:\\CV\\Dataset\\Detection\\Visdrone'
-dataset_name = 'visdrone'
+data_dir = 'G:\\CV\\Dataset\\Detection\\TT100K\\sources'
+dataset_name = 'tt100k_45'
 mode = 'train'
 result_dir = osp.join("G:\\CV\\Code\\tools\\datasets-tools\\statistics_tools\\result", dataset_name)
 if not osp.exists(result_dir):
@@ -197,28 +199,9 @@ def analyse_bboxes(dataset):
     area_max = obj_area_ratio.max()
     area_mean = obj_area_ratio.mean()
     area_min = obj_area_ratio.min()
-    area_diff_max = per_img_obj_area_max_diff.max()
-    area_diff_mean = per_img_obj_area_max_diff.mean()
-    area_diff_min = per_img_obj_area_max_diff.min()
     f.writelines('maximum object area: {}\n'.format(area_max))
     f.writelines('mean object area: {}\n'.format(area_mean))
     f.writelines('minimum object area: {}\n'.format(area_min))
-    f.writelines('maximum object area diff: {}\n'.format(area_diff_max))
-    f.writelines('mean object area diff: {}\n'.format(area_diff_mean))
-    f.writelines('minimum object area diff: {}\n'.format(area_diff_min))
-    f.writelines('-------side------\n')
-    side_max = obj_longest_side.max()
-    side_mean = obj_longest_side.mean()
-    side_min = obj_longest_side.min()
-    side_diff_max = per_img_obj_side_max_diff.max()
-    side_diff_mean = per_img_obj_side_max_diff.mean()
-    side_diff_min = per_img_obj_side_max_diff.min()
-    f.writelines('maximum object side: {}\n'.format(side_max))
-    f.writelines('mean object side: {}\n'.format(side_mean))
-    f.writelines('minimum object side: {}\n'.format(side_min))
-    f.writelines('maximum object side diff: {}\n'.format(side_diff_max))
-    f.writelines('mean object side diff: {}\n'.format(side_diff_mean))
-    f.writelines('minimum object side diff: {}\n'.format(side_diff_min))
     f.writelines('-------scale: s, m, l------\n')
     small_obj = (obj_area_ratio < hyp['small_obj']).sum() / len(obj_area_ratio)
     large_obj = (obj_area_ratio > hyp['medium_obj']).sum() / len(obj_area_ratio)
@@ -251,19 +234,6 @@ def analyse_bboxes(dataset):
     plt.yticks(my_y_ticks)
     plt.bar(obj_size_rw, obj_size_rh)
     plt.savefig(osp.join(result_dir, mode+"_obj_size_ratio.png"))
-    # plt.show()
-    plt.close()
-
-    # plot area
-    obj_area_ratio_sample = np.sort(obj_area_ratio)[::-1]
-    obj_area_ratio_sample = obj_area_ratio_sample[::100]
-    plt.figure()
-    plt.title('obj area (ratio sample 1/100)')
-    plt.grid()
-    plt.xlabel('image')
-    plt.ylabel('area')
-    plt.scatter(range(len(obj_area_ratio_sample)), obj_area_ratio_sample)
-    plt.savefig(osp.join(result_dir, mode+"_obj_area_ratio.png"))
     # plt.show()
     plt.close()
 
@@ -342,12 +312,12 @@ def analyse_img_MeanAndStd(dataset):
 
 
 def statics(dataset):
-    # analyse_labels(dataset)
+    analyse_labels(dataset)
     analyse_bboxes(dataset)
     if mode == 'train':
         analyse_img_MeanAndStd(dataset)  # olny analys
 
 
 if __name__ == '__main__':
-    dataset = VisDrone(data_dir, mode)
+    dataset = TT100K(data_dir, mode)
     statics(dataset)

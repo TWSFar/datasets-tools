@@ -1,0 +1,24 @@
+plane: 8072
+ship: 32973
+storage-tank: 5346
+baseball-diamond: 412
+tennis-court: 2425
+basketball-court: 529
+ground-track-field: 331
+harbor: 6016
+bridge: 2075
+small-vehicle: 126501
+large-vehicle: 22218
+helicopter: 635
+roundabout: 437
+soccer-ball-field: 338
+swimming-pool: 2181
+container-crane: 142
+-------------
+sum obj: 210631
+mean per classes: 13164.4375
+mean obj per image: 149.27781715095676
+median obj per image: 40.0
+max obj per image: 10206
+mode obj per image: 6
+-------------

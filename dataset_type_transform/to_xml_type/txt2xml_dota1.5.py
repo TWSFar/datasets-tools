@@ -24,9 +24,9 @@ import matplotlib.pyplot as plt
 hyp = {
     'dataset': 'DOTA1.5',
     'img_type': '.png',
-    'mode': 'train',  # for save Set: train.txt
-    'data_dir': 'G:\\CV\\Dataset\\Detection\\DOTA\\DOTA_V15\\train',
-    'show': True
+    'mode': 'val',  # for save Set: train.txt
+    'data_dir': 'G:\\CV\\Dataset\\Detection\\DOTA\\DOTA_V15\\val',
+    'show': False
 }
 hyp['xml_dir'] = osp.join(hyp['data_dir'], 'annotations_xml')
 hyp['txt_dir'] = osp.join(hyp['data_dir'], 'annotations')
