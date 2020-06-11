@@ -22,23 +22,25 @@ import matplotlib.pyplot as plt
 
 
 hyp = {
-    'dataset': 'DOTA1.5',
+    'dataset': 'DOTA15',
     'img_type': '.png',
     'mode': 'val',  # for save Set: train.txt
-    'data_dir': 'G:\\CV\\Dataset\\Detection\\DOTA\\DOTA_V15\\val',
-    'show': False
+    'data_dir': '/home/twsf/data/DOTA15/',
+    'show': True
 }
-hyp['xml_dir'] = osp.join(hyp['data_dir'], 'annotations_xml')
-hyp['txt_dir'] = osp.join(hyp['data_dir'], 'annotations')
-hyp['img_dir'] = osp.join(hyp['data_dir'], 'images')
-hyp['set_dir'] = osp.join(hyp['data_dir'], 'ImageSets', 'Main')
+hyp['xml_dir'] = osp.join(hyp['data_dir'], 'Annotationsv1')
+hyp['txt_dir'] = osp.join(hyp['data_dir'], 'Annotations_txt')
+hyp['img_dir'] = osp.join(hyp['data_dir'], 'JPEGImages')
+hyp['set_dir'] = osp.join(hyp['data_dir'], 'ImageSets')
+
+classes = ("plane", "ship", "small-vehicle", "large-vehicle", "helicopter")
 
 
 def show_image(img, labels):
     plt.figure(figsize=(10, 10))
     plt.subplot().imshow(img)
     plt.plot(labels[:, [0, 0, 2, 2, 0]].T, labels[:, [1, 3, 3,  1, 1]].T, '-')
-    # plt.savefig('test_0.jpg')
+    plt.savefig('test_0.jpg')
     plt.show()
 
 
@@ -49,7 +51,7 @@ def getGTBox_DOTA(anno_path, **kwargs):
     with open(anno_path, 'r') as f:
         for line in f.readlines():
             data = line.split()
-            if (len(data) == 10):
+            if len(data) == 10 and data[8].strip() in classes:
                 box_all.append([float(data[0]), float(data[1]), float(data[4]), float(data[5])])
                 gt_cls.append(str(data[8].strip()))
                 difficult.append(int(data[9]))
@@ -106,12 +108,15 @@ if __name__ == '__main__':
     if not osp.exists(hyp['xml_dir']):
         os.makedirs(hyp['xml_dir'])
 
-    txt_files = os.listdir(hyp['txt_dir'])
+    # txt_files = os.listdir(hyp['txt_dir'])
+    set_list = []
+    with open(hyp['set_dir']+'/{}.txt'.format(hyp['mode'])) as f:
+        for line in f.readlines():
+            set_list.append(line.strip())
 
-    for file_name in tqdm(txt_files):
-        setList.append(file_name[:-4])
-
-        anno_txt = osp.join(hyp['txt_dir'], file_name)
+    for line in tqdm(set_list):
+        file_name = line + '.png'
+        anno_txt = osp.join(hyp['txt_dir'], line+'.txt')
         box_all, gt_cls, difficult = getGTBox_DOTA(anno_txt)
 
         # image info
@@ -119,9 +124,17 @@ if __name__ == '__main__':
         img_path = osp.join(hyp['img_dir'], img_name)  # image path
         img = plt.imread(img_path)
         tsize = img.shape[:2]
-
+        del_list = np.zeros(len(gt_cls), dtype=np.bool)
+        for i, box in enumerate(box_all):
+            if box[2] > tsize[1] or box[3] > tsize[0]:
+                del_list[i] = True
+        box_all = np.array(box_all)[~del_list]
+        gt_cls = np.array(gt_cls)[~del_list]
+        if len(gt_cls) == 0:
+            continue
         dom = make_xml(box_all, gt_cls, difficult, img_name, tsize)
 
+        setList.append(file_name[:-4])
         # save
         anno_xml = os.path.join(hyp['xml_dir'], file_name[:-4] + '.xml')
         with open(anno_xml, 'w') as fx:

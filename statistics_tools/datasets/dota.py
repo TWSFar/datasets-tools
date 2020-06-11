@@ -6,19 +6,19 @@ from PIL import Image
 import os.path as osp
 
 
-class Dota_V15(object):
+class DOTA(object):
     classes = ('plane', 'ship', 'storage-tank', 'baseball-diamond',
                'tennis-court', 'basketball-court', 'ground-track-field',
                'harbor', 'bridge', 'small-vehicle', 'large-vehicle', 'helicopter',
                'roundabout', 'soccer-ball-field', 'swimming-pool', 'container-crane')
-    dataset = 'dota1.5'
+    dataset = 'dota'
 
     def __init__(self, data_dir, mode):
         self.mode = mode
         # Path
         self.data_dir = osp.join(data_dir, mode)
         self.img_dir = osp.join(self.data_dir, 'images')
-        self.ann_dir = osp.join(self.data_dir, 'annotations')
+        self.ann_dir = osp.join(self.data_dir, 'annotationsv1')
         self.cache_path = self.cre_cache_path(self.data_dir)
         self.cache_file = osp.join(self.cache_path, self.mode + '_samples.pkl')
         self.anno_file = os.path.join(self.ann_dir, '{}.txt')
@@ -113,7 +113,7 @@ def show_image(img, bboxes, cls, labels):
 
 
 if __name__ == '__main__':
-    dataset = Dota_V15('G:\\CV\\Dataset\\Detection\\DOTA\\DOTA_V15', 'train')
+    dataset = DOTA('G:\\CV\\Dataset\\Detection\\DOTA\\DOTA_V15', 'train')
     for i in range(3000):
         sample = dataset.samples[i]
         img_path = sample['image']

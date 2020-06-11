@@ -20,9 +20,10 @@ from sklearn.cluster import KMeans
 from datasets.visdrone import VisDrone
 from datasets.dotav15 import Dota_V15
 from datasets.tt100k_45 import TT100K
+from datasets.dota import DOTA
 # from datasets.visdrone_chip import VisDrone
-data_dir = 'G:\\CV\\Dataset\\Detection\\TT100K\\sources'
-dataset_name = 'tt100k_45'
+data_dir = 'G:\\CV\\Dataset\\Detection\\DOTA\\DOTA_V15'
+dataset_name = 'dota'
 mode = 'train'
 result_dir = osp.join("G:\\CV\\Code\\tools\\datasets-tools\\statistics_tools\\result", dataset_name)
 if not osp.exists(result_dir):
@@ -319,5 +320,5 @@ def statics(dataset):
 
 
 if __name__ == '__main__':
-    dataset = TT100K(data_dir, mode)
+    dataset = DOTA(data_dir, mode)
     statics(dataset)

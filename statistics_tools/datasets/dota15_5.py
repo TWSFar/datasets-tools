@@ -1,34 +1,34 @@
 import os
 import cv2
+import json
 import pickle
 import numpy as np
 from PIL import Image
 import os.path as osp
+import xml.etree.ElementTree as ET
 
 
-class Dota_V15(object):
-    classes = ('plane', 'ship', 'storage-tank', 'baseball-diamond',
-               'tennis-court', 'basketball-court', 'ground-track-field',
-               'harbor', 'bridge', 'small-vehicle', 'large-vehicle', 'helicopter',
-               'roundabout', 'soccer-ball-field', 'swimming-pool', 'container-crane')
-    dataset = 'dota1.5'
+class DOTA15_5(object):
+    classes = ("plane", "ship", "small-vehicle", "large-vehicle", "helicopter")
+    dataset = 'dota15_5'
 
     def __init__(self, data_dir, mode):
         self.mode = mode
+
         # Path
-        self.data_dir = osp.join(data_dir, mode)
+        self.data_dir = data_dir
         self.img_dir = osp.join(self.data_dir, 'images')
-        self.ann_dir = osp.join(self.data_dir, 'annotations')
+        self.anno_file = osp.join(self.data_dir, 'annotations_xml', '{}.xml')
+        self.set_dir = osp.join(self.data_dir, 'ImageSets', mode+'.txt')
         self.cache_path = self.cre_cache_path(self.data_dir)
         self.cache_file = osp.join(self.cache_path, self.mode + '_samples.pkl')
-        self.anno_file = os.path.join(self.ann_dir, '{}.txt')
 
         # Dataset information
         self.img_type = '.png'
+        self.img_ids = self._load_image_set_index()
+        self.num_images = len(self.img_ids)
         self.num_classes = len(self.classes)
         self.class_to_id = dict(zip(self.classes, range(self.num_classes)))
-        self.im_ids = self._load_image_set_index()
-        self.num_images = len(self.im_ids)
 
         # bounding boxes and image information
         self.samples = self._load_samples()
@@ -44,27 +44,34 @@ class Dota_V15(object):
         """Load the indexes listed in this dataset's image set file.
         """
         image_index = []
-        image_set = os.listdir(self.img_dir)
-        for line in image_set:
-            image_index.append(line[:-4])  # type of image is .jpg
+        with open(self.set_dir) as f:
+            for line in f.readlines():
+                image_index.append(line.strip())
         return image_index
 
-    def getGTBox(self, anno_path, **kwargs):
+    def getGTBox(self, index):
+        anno_path = self.anno_file.format(index)
         box_all = []
         gt_cls = []
-        with open(anno_path, 'r') as f:
-            for line in f.readlines():
-                data = line.split()
-                if (len(data) == 10):
-                    box_all.append([float(data[0]), float(data[1]), float(data[4]), float(data[5])])
-                    gt_cls.append(self.class_to_id[data[8].strip()])
+        xml = ET.parse(anno_path).getroot()
+        # y1, x1, y2, x2
+        pts = ['xmin', 'ymin', 'xmax', 'ymax']
+        # bounding boxes
+        for obj in xml.iter('object'):
+            bbox = obj.find('bndbox')
+            bndbox = []
+            for i, pt in enumerate(pts):
+                cur_pt = int(bbox.find(pt).text) - 1
+                bndbox.append(cur_pt)
+            box_all += [bndbox]
+            cls = obj.find('name').text
+            gt_cls.append(self.class_to_id[cls])
 
         return {'bboxes': np.array(box_all, dtype=np.float64),
                 'cls': np.array(gt_cls)}
 
     def _load_samples(self):
         cache_file = self.cache_file
-        anno_file = self.anno_file
 
         # load bbox and save to cache
         if os.path.exists(cache_file):
@@ -76,12 +83,11 @@ class Dota_V15(object):
 
         # load information of image and save to cache
         sizes = [Image.open(osp.join(self.img_dir, index+self.img_type)).size
-                 for index in self.im_ids]
+                 for index in self.img_ids]
 
-        samples = [self.getGTBox(anno_file.format(index))
-                   for index in self.im_ids]
+        samples = [self.getGTBox(index) for index in self.img_ids]
 
-        for i, index in enumerate(self.im_ids):
+        for i, index in enumerate(self.img_ids):
             samples[i]['image'] = osp.join(self.img_dir, index+self.img_type)
             samples[i]['width'] = sizes[i][0]
             samples[i]['height'] = sizes[i][1]
@@ -93,34 +99,35 @@ class Dota_V15(object):
         return samples
 
 
-def show_image(img, bboxes, cls, labels):
+def show_image(img, bboxes, cls, labels_name):
     for ii, bbox in enumerate(bboxes):
         x1 = int(bbox[0])
         y1 = int(bbox[1])
         x2 = int(bbox[2])
         y2 = int(bbox[3])
 
-        t_size = cv2.getTextSize(labels[cls[ii]], cv2.FONT_HERSHEY_COMPLEX, 0.4, 1)[0]
+        t_size = cv2.getTextSize(cls[ii], cv2.FONT_HERSHEY_COMPLEX, 0.4, 1)[0]
         c1 = (x1, y1 - t_size[1]-4)
         c2 = (x1 + t_size[0], y1)
         cv2.rectangle(img, c1, c2, color=(0, 0, 255), thickness=-1)
-        cv2.putText(img, labels[cls[ii]], (x1, y1-4), cv2.FONT_HERSHEY_COMPLEX, 0.4, (255, 255, 255), 1)
+        cv2.putText(img, cls[ii], (x1, y1-4), cv2.FONT_HERSHEY_COMPLEX, 0.4, (255, 255, 255), 1)
         # cv2.putText(img, 'vehicle', (x1, y1-10), cv2.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 1)
         cv2.rectangle(img, (x1, y1), (x2, y2), color=(0, 0, 255), thickness=2)
 
-    cv2.imshow('img', img)
+    cv2.namedWindow("enhanced", 0)
+    cv2.resizeWindow("enhanced", 640, 480)
+    cv2.imshow("enhanced", img)
     cv2.waitKey(0)
 
 
 if __name__ == '__main__':
-    dataset = Dota_V15('G:\\CV\\Dataset\\Detection\\DOTA\\DOTA_V15', 'train')
-    for i in range(3000):
+    dataset = DOTA15_5('G:\\CV\\Dataset\\Detection\\DOTA\\DOTA_V15', 'train')
+    for i in range(100):
         sample = dataset.samples[i]
         img_path = sample['image']
+        img = cv2.imdecode(np.fromfile(img_path, dtype=np.uint8), -1)
         bboxes = sample['bboxes']
         cls = sample['cls']
-        if 15 not in cls: continue
-        img = cv2.imdecode(np.fromfile(img_path, dtype=np.uint8), -1)
         labels = dataset.classes
         show_image(img, bboxes, cls, labels)
         # cv2.imread(sample[''])

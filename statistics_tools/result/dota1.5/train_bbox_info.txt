@@ -1,0 +1,193 @@
+kmeans ratio: 0.7494512821981099, 1.9562078704185826, 4.857570517402767
+kmeans scale: 0.0005028118021125124, 0.194050293455634, 0.03654086029396408
+
+all object bboxes information:
+------area-------
+maximum object area: 0.551681661204109
+mean object area: 0.0008855948527292033
+minimum object area: 4.5555160237998386e-07
+-------scale: s, m, l------
+small object percentage: 95.85%
+medium object percentage: 3.698%
+large object percentage: 0.4515%
+------------------
+
+small obj side mean: 0.015961662050103718
+medium obj side mean: 0.020397346324108504
+large obj side mean: 0.3225245974981006
+0: plane
+	area:
+		maximum object area: 0.0729352595797791
+		mean object area: 0.0015600984884741045
+		minimum object area: 3.614457831325301e-06
+	side:
+		maximum object side: 0.4169921875
+		mean object side: 0.03665371553381331
+		minimum object side: 0.00225
+------------------
+
+1: ship
+	area:
+		maximum object area: 0.551681661204109
+		mean object area: 0.00043737241496021804
+		minimum object area: 1.8818042906810543e-06
+	side:
+		maximum object side: 0.7769516728624535
+		mean object side: 0.022235034645069325
+		minimum object side: 0.0016072002571520412
+------------------
+
+2: storage-tank
+	area:
+		maximum object area: 0.009495035181888505
+		mean object area: 0.0002150273937789955
+		minimum object area: 7.211538461538462e-07
+	side:
+		maximum object side: 0.1102227298686465
+		mean object side: 0.012357499018134611
+		minimum object side: 0.0009615384615384616
+------------------
+
+3: baseball-diamond
+	area:
+		maximum object area: 0.16340349791054018
+		mean object area: 0.010077764551566212
+		minimum object area: 4.726426076833528e-05
+	side:
+		maximum object side: 0.45054945054945056
+		mean object side: 0.08120589931201821
+		minimum object side: 0.00725
+------------------
+
+4: tennis-court
+	area:
+		maximum object area: 0.09556338608638314
+		mean object area: 0.014178702233699476
+		minimum object area: 4.5375e-05
+	side:
+		maximum object side: 0.4215686274509804
+		mean object side: 0.13701449405082322
+		minimum object side: 0.00825
+------------------
+
+5: basketball-court
+	area:
+		maximum object area: 0.15642937643771326
+		mean object area: 0.008972994330361259
+		minimum object area: 3.123620536503519e-05
+	side:
+		maximum object side: 0.5407407407407407
+		mean object side: 0.09438763275906484
+		minimum object side: 0.005977178047455171
+------------------
+
+6: ground-track-field
+	area:
+		maximum object area: 0.40977870223219387
+		mean object area: 0.02996585955389073
+		minimum object area: 2.0560673241295493e-05
+	side:
+		maximum object side: 0.8662280701754386
+		mean object side: 0.13169364547633683
+		minimum object side: 0.004639858594785683
+------------------
+
+7: harbor
+	area:
+		maximum object area: 0.269397478501359
+		mean object area: 0.007210231511541307
+		minimum object area: 1.3861270628025294e-05
+	side:
+		maximum object side: 0.8719211822660099
+		mean object side: 0.1107170563207301
+		minimum object side: 0.004243281471004243
+------------------
+
+8: bridge
+	area:
+		maximum object area: 0.4490322316502728
+		mean object area: 0.0012048301793728116
+		minimum object area: 2.5e-06
+	side:
+		maximum object side: 1.0
+		mean object side: 0.019478334981488266
+		minimum object side: 0.00225
+------------------
+
+9: small-vehicle
+	area:
+		maximum object area: 0.008457532231677849
+		mean object area: 0.000122829478825051
+		minimum object area: 4.5555160237998386e-07
+	side:
+		maximum object side: 0.140625
+		mean object side: 0.010112458953617386
+		minimum object side: 0.0007955449482895784
+------------------
+
+10: large-vehicle
+	area:
+		maximum object area: 0.025240384615384616
+		mean object area: 0.0013689856401367306
+		minimum object area: 1.771589564811048e-06
+	side:
+		maximum object side: 0.26865671641791045
+		mean object side: 0.040937719753522686
+		minimum object side: 0.0013361328497804924
+------------------
+
+11: helicopter
+	area:
+		maximum object area: 0.0254238129175898
+		mean object area: 0.0005459747351145032
+		minimum object area: 1.71661376953125e-05
+	side:
+		maximum object side: 0.18705035971223022
+		mean object side: 0.020660861681715586
+		minimum object side: 0.00439453125
+------------------
+
+12: roundabout
+	area:
+		maximum object area: 0.1753920535548255
+		mean object area: 0.003975025855288245
+		minimum object area: 6.150777704332936e-06
+	side:
+		maximum object side: 0.444636678200692
+		mean object side: 0.031720628867305284
+		minimum object side: 0.0030834914611005695
+------------------
+
+13: soccer-ball-field
+	area:
+		maximum object area: 0.3491967637863183
+		mean object area: 0.028642541772436723
+		minimum object area: 5.87447806894157e-06
+	side:
+		maximum object side: 0.6431226765799256
+		mean object side: 0.15343463239506772
+		minimum object side: 0.0026513477684489617
+------------------
+
+14: swimming-pool
+	area:
+		maximum object area: 0.06905859245862746
+		mean object area: 0.0006812604624086208
+		minimum object area: 3.0257291364251346e-06
+	side:
+		maximum object side: 0.27473309608540925
+		mean object side: 0.023413861991269283
+		minimum object side: 0.0019387359441644049
+------------------
+
+15: container-crane
+	area:
+		maximum object area: 0.003373680857546464
+		mean object area: 0.0006130508687209518
+		minimum object area: 4.299590446095049e-05
+	side:
+		maximum object side: 0.08693213684800898
+		mean object side: 0.029015305444943934
+		minimum object side: 0.007955675522091206
+------------------
+
