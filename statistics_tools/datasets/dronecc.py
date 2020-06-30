@@ -89,7 +89,7 @@ def show_image(img, coordinate):
     plt.imshow(img[..., ::-1])
     for local in coordinate:
         x, y = local
-        plt.scatter(x, y, c='red', s=30, alpha=0.5)
+        plt.scatter(x, y, c='red', s=40, alpha=0.5)
     plt.show()
 
 

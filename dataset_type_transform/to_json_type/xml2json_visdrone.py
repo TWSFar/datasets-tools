@@ -69,7 +69,7 @@ def getGTBox(anno_path, **kwargs):
     gt_cls = []
     xml = ET.parse(anno_path).getroot()
     # y1, x1, y2, x2
-    pts = ['ymin', 'xmin', 'ymax', 'xmax']
+    pts = ['xmin', 'ymin', 'xmax', 'ymax']
     # bounding boxes
     for obj in xml.iter('object'):
         bbox = obj.find('bndbox')

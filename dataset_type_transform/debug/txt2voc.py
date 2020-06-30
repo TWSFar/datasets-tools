@@ -1,68 +1,103 @@
-import os
-from PIL import Image
-from tqdm import tqdm
-import os.path as osp
+mask = (
+                    204.01,
+                    306.23,
+                    206.07,
+                    295.92,
+                    216.38,
+                    281.48,
+                    223.6,
+                    269.11,
+                    233.91,
+                    263.95,
+                    229.79,
+                    261.89,
+                    227.72,
+                    251.58,
+                    226.69,
+                    244.36,
+                    229.79,
+                    242.3,
+                    234.94,
+                    235.08,
+                    248.35,
+                    244.36,
+                    246.29,
+                    255.7,
+                    246.29,
+                    261.89,
+                    257.63,
+                    266.01,
+                    260.72,
+                    287.67,
+                    264.85,
+                    305.2,
+                    264.85,
+                    321.7,
+                    259.69,
+                    335.1,
+                    256.6,
+                    350.57,
+                    253.5,
+                    372.22,
+                    254.53,
+                    405.22,
+                    256.6,
+                    412.44,
+                    244.22,
+                    412.44,
+                    240.1,
+                    340.26,
+                    240.1,
+                    327.88,
+                    240.1,
+                    315.99,
+                    231.71,
+                    326.13,
+                    234.15,
+                    361.11,
+                    234.15,
+                    399.93,
+                    229.61,
+                    406.92,
+                    213.87,
+                    402.37,
+                    217.02,
+                    358.31,
+                    217.37,
+                    341.17,
+                    222.26,
+                    326.13,
+                    225.06,
+                    313.89,
+                    230.66,
+                    300.95,
+                    226.81,
+                    283.47,
+                    215.62,
+                    296.76,
+                    211.42,
+                    305.85,
+                    206.53,
+                    307.95
+)
+import numpy as np
 
-root_dir = "/home/mcc/data/visdrone2019/VisDrone2019-DET-train/"
-annotations_dir = root_dir+"annotations/"
-image_dir = root_dir + "images/"
-xml_dir = root_dir+"Annotations_XML/"
-#class_name = ['ignored regions','pedestrian','people','bicycle','car','van','truck','tricycle','awning-tricycle','bus','motor','others']
-class_name = []
-class_num = 12
+m = np.zeros((640, 529, 3))
 
-if not osp.exists(xml_dir):
-    os.makedirs(xml_dir)
+mask = np.array(mask)
 
-for i in range(class_num):
-    class_name.append(str(i+1))
+for i in range(0, len(mask)//2, 2):
+    x = int(mask[i])
+    y = int(mask[i+1])
+    m[y, x, :] = 1.0
 
-for filename in tqdm(os.listdir(annotations_dir)):
-    fin = open(annotations_dir+filename, 'r')
-    image_name = filename.split('.')[0]
-    img = Image.open(image_dir+image_name+".jpg")
-    xml_name = xml_dir+image_name+'.xml'
-    with open(xml_name, 'w') as fout:
-        fout.write('<annotation>'+'\n')
 
-        fout.write('\t'+'<folder>VOC2007</folder>'+'\n')
-        fout.write('\t'+'<filename>'+image_name+'.jpg'+'</filename>'+'\n')
+def show_image(img):
+    import matplotlib.pyplot as plt
+    plt.figure(figsize=(10, 10))
+    plt.subplot().imshow(img)
 
-        fout.write('\t'+'<source>'+'\n')
-        fout.write('\t\t'+'<database>'+'VisDrone2019 Database'+'</database>'+'\n')
-        fout.write('\t\t'+'<annotation>'+'VisDrone2019'+'</annotation>'+'\n')
-        fout.write('\t\t'+'<image>'+'flickr'+'</image>'+'\n')
-        fout.write('\t\t'+'<flickrid>'+'Unspecified'+'</flickrid>'+'\n')
-        fout.write('\t'+'</source>'+'\n')
+    plt.show()
+    # plt.show()
 
-        fout.write('\t'+'<owner>'+'\n')
-        fout.write('\t\t'+'<flickrid>'+'TWSF'+'</flickrid>'+'\n')
-        fout.write('\t\t'+'<name>'+'TWSF'+'</name>'+'\n')
-        fout.write('\t'+'</owner>'+'\n')
-
-        fout.write('\t'+'<size>'+'\n')
-        fout.write('\t\t'+'<width>'+str(img.size[0])+'</width>'+'\n')
-        fout.write('\t\t'+'<height>'+str(img.size[1])+'</height>'+'\n')
-        fout.write('\t\t'+'<depth>'+'3'+'</depth>'+'\n')
-        fout.write('\t'+'</size>'+'\n')
-
-        fout.write('\t'+'<segmented>'+'0'+'</segmented>'+'\n')
-
-        for line in fin.readlines():
-            line = line.split(',')
-            fout.write('\t'+'<object>'+'\n')
-            fout.write('\t\t'+'<name>'+class_name[int(line[5])]+'</name>'+'\n')
-            fout.write('\t\t'+'<pose>'+'Unspecified'+'</pose>'+'\n')
-            fout.write('\t\t'+'<truncated>'+line[6]+'</truncated>'+'\n')
-            fout.write('\t\t'+'<difficult>'+str(int(line[7]))+'</difficult>'+'\n')
-            fout.write('\t\t'+'<bndbox>'+'\n')
-            fout.write('\t\t\t'+'<xmin>'+line[0]+'</xmin>'+'\n')
-            fout.write('\t\t\t'+'<ymin>'+line[1]+'</ymin>'+'\n')
-            # pay attention to this point!(0-based)
-            fout.write('\t\t\t'+'<xmax>'+str(int(line[0])+int(line[2])-1)+'</xmax>'+'\n')
-            fout.write('\t\t\t'+'<ymax>'+str(int(line[1])+int(line[3])-1)+'</ymax>'+'\n')
-            fout.write('\t\t'+'</bndbox>'+'\n')
-            fout.write('\t'+'</object>'+'\n')
-
-        fin.close()
-        fout.write('</annotation>')
+show_image(m)

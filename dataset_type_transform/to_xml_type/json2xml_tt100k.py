@@ -33,6 +33,7 @@ classes = ('i2', 'i4', 'i5', 'il100', 'il60', 'il80', 'io', 'ip', 'p10', 'p11', 
            'p23', 'p26', 'p27', 'p3', 'p5', 'p6', 'pg', 'ph4', 'ph4.5', 'ph5', 'pl100', 'pl120',
            'pl20', 'pl30', 'pl40', 'pl5', 'pl50', 'pl60', 'pl70', 'pl80', 'pm20', 'pm30',
            'pm55', 'pn', 'pne', 'po', 'pr40', 'w13', 'w32', 'w55', 'w57', 'w59', 'wo')
+cat2label = {cat_id: i for i, cat_id in enumerate(classes)}
 
 
 def getGTBox(objects):
@@ -75,7 +76,7 @@ def make_xml(box_list, label_list, image_name, tsize):
     for i in range(len(box_list)):
         node_object = SubElement(node_root, 'object')
         node_name = SubElement(node_object, 'name')
-        node_name.text = str(label_list[i])
+        node_name.text = str(cat2label[label_list[i]])
         node_difficult = SubElement(node_object, 'difficult')
         node_difficult.text = '0'
 

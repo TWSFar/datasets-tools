@@ -22,18 +22,21 @@ import matplotlib.pyplot as plt
 
 
 hyp = {
-    'dataset': 'DOTA15',
+    'dataset': 'DOTA',
     'img_type': '.png',
     'mode': 'val',  # for save Set: train.txt
-    'data_dir': '/home/twsf/data/DOTA15/',
+    'data_dir': '/home/twsf/data/DOTA/',
     'show': True
 }
-hyp['xml_dir'] = osp.join(hyp['data_dir'], 'Annotationsv1')
+hyp['xml_dir'] = osp.join(hyp['data_dir'], 'Annotations')
 hyp['txt_dir'] = osp.join(hyp['data_dir'], 'Annotations_txt')
 hyp['img_dir'] = osp.join(hyp['data_dir'], 'JPEGImages')
 hyp['set_dir'] = osp.join(hyp['data_dir'], 'ImageSets')
 
-classes = ("plane", "ship", "small-vehicle", "large-vehicle", "helicopter")
+classes = ('plane', 'ship', 'storage-tank', 'baseball-diamond',
+           'tennis-court', 'basketball-court', 'ground-track-field',
+           'harbor', 'bridge', 'small-vehicle', 'large-vehicle', 'helicopter',
+           'roundabout', 'soccer-ball-field', 'swimming-pool')
 
 
 def show_image(img, labels):
