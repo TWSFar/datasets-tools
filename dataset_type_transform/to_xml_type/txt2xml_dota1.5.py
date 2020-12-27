@@ -24,14 +24,14 @@ import matplotlib.pyplot as plt
 hyp = {
     'dataset': 'DOTA',
     'img_type': '.png',
-    'mode': 'val',  # for save Set: train.txt
-    'data_dir': '/home/twsf/data/DOTA/',
+    'mode': 'train',  # for save Set: train.txt
+    'data_dir': 'G:\\CV\\Dataset\\Detection\\DOTA\\DOTA_V15\\train',
     'show': True
 }
-hyp['xml_dir'] = osp.join(hyp['data_dir'], 'Annotations')
-hyp['txt_dir'] = osp.join(hyp['data_dir'], 'Annotations_txt')
-hyp['img_dir'] = osp.join(hyp['data_dir'], 'JPEGImages')
-hyp['set_dir'] = osp.join(hyp['data_dir'], 'ImageSets')
+hyp['xml_dir'] = osp.join(hyp['data_dir'], 'Annotations_xml')
+hyp['txt_dir'] = osp.join(hyp['data_dir'], 'Annotations')
+hyp['img_dir'] = osp.join(hyp['data_dir'], 'images')
+hyp['set_dir'] = osp.join(hyp['data_dir'], 'ImageSets\\Main')
 
 classes = ('plane', 'ship', 'storage-tank', 'baseball-diamond',
            'tennis-court', 'basketball-court', 'ground-track-field',
@@ -42,7 +42,7 @@ classes = ('plane', 'ship', 'storage-tank', 'baseball-diamond',
 def show_image(img, labels):
     plt.figure(figsize=(10, 10))
     plt.subplot().imshow(img)
-    plt.plot(labels[:, [0, 0, 2, 2, 0]].T, labels[:, [1, 3, 3,  1, 1]].T, '-')
+    plt.plot(labels[:, [0, 0, 2, 2, 0]].T, labels[:, [1, 3, 3,  1, 1]].T, '-', color="green")
     plt.savefig('test_0.jpg')
     plt.show()
 

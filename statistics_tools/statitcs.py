@@ -23,8 +23,8 @@ from datasets.tt100k_45 import TT100K
 from datasets.dota import DOTA
 from datasets.uavdt import UAVDT
 # from datasets.visdrone_chip import VisDrone
-data_dir = 'G:\\CV\\Dataset\\Detection\\VisDrone'
-dataset_name = 'VisDrone'
+data_dir = 'G:\\CV\\Dataset\\Detection\\TT100K\\sources'
+dataset_name = 'TT100K'
 mode = 'train'
 result_dir = osp.join("G:\\CV\\Code\\tools\\datasets-tools\\statistics_tools\\result", dataset_name)
 if not osp.exists(result_dir):
@@ -51,13 +51,14 @@ def analyse_labels(dataset):
     labels_info = osp.join(result_dir, mode + '_labels_info.txt')
     f = open(labels_info, 'w')
 
-    """ image's number for per number of obj """
+    """ image's number for per number of obj  """
     per_img_obj = [len(label['cls']) for label in labels]
     per_img_obj = np.array(per_img_obj, dtype=np.int64)
     obj_img_num = np.bincount(per_img_obj)
     x = np.where(obj_img_num > 0)[0]
     y = obj_img_num[x]
 
+    """
     # plot
     plt.figure(figsize=(14, 8))
     plt.grid()
@@ -69,6 +70,7 @@ def analyse_labels(dataset):
     plt.bar(x, y)
     plt.savefig(osp.join(result_dir, mode + "_obj_img_num.png"))
     plt.close()
+    """
 
     """ number of every class """
     per_img_obj = np.sort(per_img_obj)[::-1]
@@ -79,19 +81,20 @@ def analyse_labels(dataset):
     pprint = 'max: {}\nmean: {:.1}\nmedian: {}\nmode: {}'.format(ymax, ymean, ymedian, ymode)
 
     # plot
-    plt.figure(figsize=(14, 8))
-    plt.grid()
-    plt.title('There are Xi\'th image containing Yi targets')
-    plt.xlabel('image')
-    plt.ylabel('number of object')
-    my_x_ticks = np.arange(0, len(per_img_obj), 300)
-    my_y_ticks = np.arange(0, ymax+5, 20)
-    plt.xticks(my_x_ticks)
-    plt.yticks(my_y_ticks)
-    plt.bar(range(len(per_img_obj)), per_img_obj)
-    plt.text(900, 300, pprint)
-    plt.savefig(osp.join(result_dir, mode + "_per_img_obj.png"))
-    plt.close()
+    # plt.figure(figsize=(14, 8))
+    # plt.grid()
+    # # plt.title('There are Xi\'th image containing Yi targets')
+    # plt.xlabel('image')
+    # plt.ylabel('number of object')
+    # my_x_ticks = np.arange(0, len(per_img_obj), 300)
+    # my_y_ticks = np.arange(0, ymax+5, 20)
+    # plt.xticks(my_x_ticks)
+    # plt.yticks(my_y_ticks)
+    # plt.bar(np.array(dataset.classes), per_img_obj)
+    # plt.text(900, 300, pprint)
+    # plt.savefig(osp.join(result_dir, mode + "_per_img_obj.png"))
+    # plt.close()
+    
 
     """" number of per classes """
     classes = []
@@ -113,14 +116,14 @@ def analyse_labels(dataset):
     f.writelines('-------------\n')
 
     # plot
-    plt.figure(figsize=(14, 8))
-    plt.grid()
-    plt.title('number of evry classes')
-    plt.xlabel('class id')
-    plt.ylabel('number of class')
+    plt.figure()
+    # plt.grid()
+    # plt.title('number of evry classes')
+    plt.xlabel('class name')
+    plt.ylabel('numbers')
     my_x_ticks = np.arange(0, num_cls, 1)
     plt.xticks(my_x_ticks)
-    plt.bar(range(num_cls), per_cls_num)
+    plt.bar(np.array(dataset.classes), per_cls_num)
     plt.savefig(osp.join(result_dir, mode + "_per_cls_num.png"))
     plt.close()
 
@@ -148,8 +151,9 @@ def analyse_bboxes(dataset):
     per_obj_size_rh = [[] for i in range(dataset.num_classes)]
     per_img_obj_side_max_diff = []
     per_img_obj_area_max_diff = []
-
+    obj_area = []
     for jj, sample in enumerate(tqdm(samples)):
+        # if jj > 50: break
         img_w = sample['width']
         img_h = sample['height']
         max_side = 0
@@ -163,6 +167,7 @@ def analyse_bboxes(dataset):
             # 640, if area < 32 * 32 , obj is small obj in coco
             rw = (bbox[2] - bbox[0]) / img_w
             rh = (bbox[3] - bbox[1]) / img_h
+            obj_area.append(int((bbox[2] - bbox[0]) * (bbox[3] - bbox[1])))
             max_side = max(rw, rh, max_side)
             min_side = min(rw, rh, min_side)
             max_area = max(rw * rh, max_area)
@@ -173,34 +178,29 @@ def analyse_bboxes(dataset):
             obj_size_rh.append(rh)
             per_obj_size_rw[cls_id].append(rw)
             per_obj_size_rh[cls_id].append(rh)
-        per_img_obj_side_max_diff.append(max_side - min_side)
-        per_img_obj_area_max_diff.append(max_area - min_area)
 
     """ all obj and use ratio """
-    per_img_obj_side_max_diff = np.array(per_img_obj_side_max_diff)
-    per_img_obj_area_max_diff = np.array(per_img_obj_area_max_diff)
-    obj_size_rw = np.array(obj_size_rw, dtype=np.float64)
-    obj_size_rh = np.array(obj_size_rh, dtype=np.float64)
+    obj_size_rw = np.array(obj_size_rw)
+    obj_size_rh = np.array(obj_size_rh)
     obj_area_ratio = obj_size_rh * obj_size_rw
-    obj_longest_side = np.maximum(obj_size_rh, obj_size_rw)
-
+    obj_area = np.array(obj_area)
     # kmean get ratio and size
-    obj_max_wh_ratio = (obj_size_rw / obj_size_rh).reshape(-1, 1)
-    estimator = KMeans(n_clusters=3)
-    estimator.fit(obj_max_wh_ratio)
-    k_center = estimator.cluster_centers_.reshape(-1)
-    f.writelines('kmeans ratio: {}, {}, {}\n'.format(*k_center))
+    # obj_max_wh_ratio = (obj_size_rw / obj_size_rh).reshape(-1, 1)
+    # estimator = KMeans(n_clusters=3)
+    # estimator.fit(obj_max_wh_ratio)
+    # k_center = estimator.cluster_centers_.reshape(-1)
+    # f.writelines('kmeans ratio: {}, {}, {}\n'.format(*k_center))
 
-    estimator.fit(obj_area_ratio.reshape(-1, 1))
-    k_center = estimator.cluster_centers_.reshape(-1)
-    f.writelines('kmeans scale: {}, {}, {}\n'.format(*k_center))
+    # estimator.fit(obj_area_ratio.reshape(-1, 1))
+    # k_center = estimator.cluster_centers_.reshape(-1)
+    # f.writelines('kmeans scale: {}, {}, {}\n'.format(*k_center))
 
     # write
     f.writelines('\nall object bboxes information:\n')
     f.writelines('------area-------\n')
-    area_max = obj_area_ratio.max()
-    area_mean = obj_area_ratio.mean()
-    area_min = obj_area_ratio.min()
+    area_max = obj_area.max()
+    area_mean = obj_area.mean()
+    area_min = obj_area.min()
     f.writelines('maximum object area: {}\n'.format(area_max))
     f.writelines('mean object area: {}\n'.format(area_mean))
     f.writelines('minimum object area: {}\n'.format(area_min))
@@ -214,32 +214,46 @@ def analyse_bboxes(dataset):
     f.writelines('------------------\n\n')
 
     # small, medium, large objcet informat
-    small_obj_side = obj_longest_side[obj_area_ratio < hyp['small_obj']]
-    medium_obj_side = obj_longest_side[
-        np.where(obj_area_ratio > hyp['small_obj']) and
-        np.where(obj_area_ratio < hyp['medium_obj'])
-    ]
-    large_obj_side = obj_longest_side[obj_area_ratio > hyp['medium_obj']]
-    titles = ["small", "medium", "large"]
-    for i, obj_side in enumerate([small_obj_side, medium_obj_side, large_obj_side]):
-        f.writelines('{} obj side mean: {}\n'.format(titles[i], obj_side.mean()))
+    # small_obj_side = obj_longest_side[obj_area_ratio < hyp['small_obj']]
+    # medium_obj_side = obj_longest_side[
+    #     np.where(obj_area_ratio > hyp['small_obj']) and
+    #     np.where(obj_area_ratio < hyp['medium_obj'])
+    # ]
+    # large_obj_side = obj_longest_side[obj_area_ratio > hyp['medium_obj']]
+    # titles = ["small", "medium", "large"]
+    # for i, obj_side in enumerate([small_obj_side, medium_obj_side, large_obj_side]):
+    #     f.writelines('{} obj side mean: {}\n'.format(titles[i], obj_side.mean()))
 
-    # plot w and h
+    # # plot w and h
+    # plt.figure()
+    # plt.title('obj size (ratio)')
+    # plt.grid()
+    # plt.xlabel('width')
+    # plt.ylabel('hight')
+    # my_x_ticks = np.arange(0, 1, 0.1)
+    # my_y_ticks = np.arange(0, 1, 0.1)
+    # plt.xticks(my_x_ticks)
+    # plt.yticks(my_y_ticks)
+    # plt.bar(obj_size_rw, obj_size_rh)
+    # plt.savefig(osp.join(result_dir, mode+"_obj_size_ratio.png"))
+    # # plt.show()
+    # plt.close()
+
+    # plot area
+    nos = [0 for i in range(25)]
+    for a in obj_area:
+        s = int(np.sqrt(a) / 10 + 1)
+        if s < 25:
+            nos[s] += 1
     plt.figure()
-    plt.title('obj size (ratio)')
-    plt.grid()
-    plt.xlabel('width')
-    plt.ylabel('hight')
-    my_x_ticks = np.arange(0, 1, 0.1)
-    my_y_ticks = np.arange(0, 1, 0.1)
-    plt.xticks(my_x_ticks)
-    plt.yticks(my_y_ticks)
-    plt.bar(obj_size_rw, obj_size_rh)
+    plt.xlabel('area')
+    plt.ylabel('numbers')
+    x_label = [str(i * 10) for i in range(25)]
+    plt.bar(x_label, nos)
     plt.savefig(osp.join(result_dir, mode+"_obj_size_ratio.png"))
-    # plt.show()
-    plt.close()
-
-    """ obj for per cls (use ratio)"""
+    plt.show()
+    
+    """ obj for per cls (use ratio)
     cls_obj_mean_area = []
     for cls_id in range(dataset.num_classes):
         cls_obj_rw = np.array(per_obj_size_rw[cls_id], dtype=np.float64)
@@ -266,8 +280,9 @@ def analyse_bboxes(dataset):
         f.writelines('------------------\n\n')
 
         cls_obj_mean_area.append(area_mean)
+    """
 
-    """ plot every classes object mean area """
+    """ plot every classes object mean area 
     plt.figure()
     plt.title('cls mean area (ratio)')
     plt.grid()
@@ -279,7 +294,7 @@ def analyse_bboxes(dataset):
     plt.savefig(osp.join(result_dir, mode+"_cls_mean_area.png"))
     # plt.show()
     plt.close()
-
+    """
 
 def analyse_img_MeanAndStd(dataset):
     meanAndStd_info = osp.join(result_dir, 'train_dataset_mean_std.txt')
@@ -315,11 +330,11 @@ def analyse_img_MeanAndStd(dataset):
 
 def statics(dataset):
     analyse_labels(dataset)
-    # analyse_bboxes(dataset)
+    analyse_bboxes(dataset)
     # if mode == 'train':
     #     analyse_img_MeanAndStd(dataset)  # olny analys
 
 
 if __name__ == '__main__':
-    dataset = VisDrone(data_dir, mode)
+    dataset = TT100K(data_dir, mode)
     statics(dataset)

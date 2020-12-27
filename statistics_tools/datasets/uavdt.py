@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 
 
 class UAVDT(object):
-    classes = ('1', '2', '3')
+    classes = ('0', '1', '2')
 
     def __init__(self, data_dir, mode):
         self.mode = mode

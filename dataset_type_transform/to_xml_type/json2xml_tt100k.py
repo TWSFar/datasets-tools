@@ -36,6 +36,14 @@ classes = ('i2', 'i4', 'i5', 'il100', 'il60', 'il80', 'io', 'ip', 'p10', 'p11', 
 cat2label = {cat_id: i for i, cat_id in enumerate(classes)}
 
 
+def show_image(img, labels):
+    plt.figure(figsize=(10, 10))
+    plt.subplot().imshow(img)
+    plt.plot(labels[:, [0, 0, 2, 2, 0]].T, labels[:, [1, 3, 3,  1, 1]].T, '-', color="green")
+    plt.savefig('test_0.jpg')
+    plt.show()
+
+
 def getGTBox(objects):
 
     box_all = []
@@ -117,7 +125,8 @@ if __name__ == '__main__':
         # image info
         img_name = img_id + hyp['img_type']  # image name
         img_path = osp.join(hyp['img_dir'], img_name)  # image path
-        tsize = plt.imread(img_path).shape[:2]
+        img = plt.imread(img_path)
+        tsize = img.shape[:2]
 
         dom = make_xml(box_all, gt_cls, img_name, tsize)
 
@@ -125,6 +134,8 @@ if __name__ == '__main__':
         anno_xml = os.path.join(hyp['xml_dir'], img_id + '.xml')
         with open(anno_xml, 'w') as fx:
             fx.write(dom.toprettyxml(indent='\t', encoding='utf-8').decode('utf-8'))
+
+        show_image(img, np.array(box_all))
 
     # save ImageSet
     if not osp.exists(hyp['set_dir']):
